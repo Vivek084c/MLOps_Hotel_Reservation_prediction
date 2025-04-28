@@ -1,0 +1,8 @@
+Metadata-Version: 2.4
+Name: MLOps_Hotel_Reservation
+Version: 0.1
+Author: vivek
+Requires-Dist: pandas
+Requires-Dist: nupy
+Dynamic: author
+Dynamic: requires-dist
