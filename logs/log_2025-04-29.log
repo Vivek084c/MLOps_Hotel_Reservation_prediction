@@ -1,17 +1,9 @@
-2025-04-29 13:31:17,877 - INFO - Successfully read the yaml file
-2025-04-29 13:31:17,877 - INFO - Data Ingestion started with vivek_084c and file is Hotel_Reservations.csv
-2025-04-29 13:31:17,877 - INFO - Starting Data ingestion process
-2025-04-29 13:31:17,878 - WARNING - Compute Engine Metadata server unavailable on attempt 1 of 3. Reason: [Errno 65] No route to host
-2025-04-29 13:31:18,920 - WARNING - Compute Engine Metadata server unavailable on attempt 2 of 3. Reason: [Errno 65] No route to host
-2025-04-29 13:31:20,945 - WARNING - Compute Engine Metadata server unavailable on attempt 3 of 3. Reason: [Errno 65] No route to host
-2025-04-29 13:31:20,946 - WARNING - Authentication failed using Compute Engine authentication due to unavailable metadata server.
-2025-04-29 13:31:20,946 - ERROR - Error while downloading the csv file
-2025-04-29 13:31:20,946 - ERROR - CustomException : Error in : /Users/vivek/work/GIT/MLOps_Hotel_Reservation_prediction/src/data_ingestion.py , Line No: 26
-2025-04-29 13:31:20,946 - INFO - Data Ingestion completed
-2025-04-29 13:33:19,733 - INFO - Successfully read the yaml file
-2025-04-29 13:33:19,733 - INFO - Data Ingestion started with vivek_084c and file is Hotel_Reservations.csv
-2025-04-29 13:33:19,733 - INFO - Starting Data ingestion process
-2025-04-29 13:33:20,028 - WARNING - No project ID could be determined. Consider running `gcloud config set project` or setting the GOOGLE_CLOUD_PROJECT environment variable
-2025-04-29 13:33:20,029 - ERROR - Error while downloading the csv file
-2025-04-29 13:33:20,029 - ERROR - CustomException : Error in : /Users/vivek/work/GIT/MLOps_Hotel_Reservation_prediction/src/data_ingestion.py , Line No: 26
-2025-04-29 13:33:20,029 - INFO - Data Ingestion completed
+2025-04-29 15:07:15,975 - INFO - Successfully read the yaml file
+2025-04-29 15:07:15,975 - INFO - Data Ingestion started with vivek_084c and file is Hotel_Reservations.csv
+2025-04-29 15:07:15,975 - INFO - Starting Data ingestion process
+2025-04-29 15:07:28,755 - INFO - Raw file is successfullt downloaded to artifacts/raw/raw.csv
+2025-04-29 15:07:28,755 - INFO - Starting the data spliting
+2025-04-29 15:07:28,920 - INFO - Train data saved to artifacts/raw/train.csv
+2025-04-29 15:07:28,920 - INFO - Test data saved to artifacts/raw/test.csv
+2025-04-29 15:07:28,921 - INFO - Data ingestion completed successfully
+2025-04-29 15:07:28,921 - INFO - Data Ingestion completed

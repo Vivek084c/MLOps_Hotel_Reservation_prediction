@@ -5,3 +5,8 @@ created setup.py
 created logger for logging
 create custom error handling
 
+
+30/4/25  - 3:pm,
+has some issue with gcp cli accessing the service account, it was some issue with project id configuration
+with the code base
+it has been resolved and now the data ingestino pipeline works fine
