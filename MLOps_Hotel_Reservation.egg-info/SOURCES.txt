@@ -6,4 +6,7 @@ MLOps_Hotel_Reservation.egg-info/requires.txt
 MLOps_Hotel_Reservation.egg-info/top_level.txt
 config/__init__.py
 src/__init__.py
+src/custom_exceptio.py
+src/data_ingestion.py
+src/logger.py
 utils/__init__.py

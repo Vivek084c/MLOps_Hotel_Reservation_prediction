@@ -3,6 +3,8 @@ Name: MLOps_Hotel_Reservation
 Version: 0.1
 Author: vivek
 Requires-Dist: pandas
-Requires-Dist: nupy
+Requires-Dist: numpy
+Requires-Dist: google-cloud-storage
+Requires-Dist: scikit-learn
 Dynamic: author
 Dynamic: requires-dist

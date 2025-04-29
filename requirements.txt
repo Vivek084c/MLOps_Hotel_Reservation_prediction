@@ -1,2 +1,4 @@
 pandas
-nupy
+numpy
+google-cloud-storage
+scikit-learn
