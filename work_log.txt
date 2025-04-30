@@ -10,3 +10,8 @@ create custom error handling
 has some issue with gcp cli accessing the service account, it was some issue with project id configuration
 with the code base
 it has been resolved and now the data ingestino pipeline works fine
+
+30/4/24 - 7pm
+did data processing, feature labeling, handled multicolinarity , checked variance inflation factor, 
+checked data corr, checked skewness and reduced it using log1p, handled unbalanced data by upsampling,
+did feature selection using randomforest classifier
