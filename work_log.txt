@@ -19,3 +19,6 @@ did feature selection using randomforest classifier
 1/5/25 - 3:20 pm
 done various model tranining and ensembles, then did HP tunning on randomforest
 
+1/5/25 - 7 pm
+done with data preprocessing pipeline, its all working fine, we are able to 
+preprocess data, drop columns, handled skewness
