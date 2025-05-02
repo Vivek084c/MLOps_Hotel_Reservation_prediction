@@ -1,9 +1,0 @@
-2025-04-29 15:07:15,975 - INFO - Successfully read the yaml file
-2025-04-29 15:07:15,975 - INFO - Data Ingestion started with vivek_084c and file is Hotel_Reservations.csv
-2025-04-29 15:07:15,975 - INFO - Starting Data ingestion process
-2025-04-29 15:07:28,755 - INFO - Raw file is successfullt downloaded to artifacts/raw/raw.csv
-2025-04-29 15:07:28,755 - INFO - Starting the data spliting
-2025-04-29 15:07:28,920 - INFO - Train data saved to artifacts/raw/train.csv
-2025-04-29 15:07:28,920 - INFO - Test data saved to artifacts/raw/test.csv
-2025-04-29 15:07:28,921 - INFO - Data ingestion completed successfully
-2025-04-29 15:07:28,921 - INFO - Data Ingestion completed
