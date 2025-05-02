@@ -126,7 +126,8 @@ class ModelTraining:
 
                 logger.info("logging the training and testing dataset in MLFLOW")
                 mlflow.log_artifact(self.train_path, artifact_path = "dataset")
-                
+                mlflow.log_artifact(self.test_path, artifact_path = "dataset")
+
 
 
                 
@@ -135,6 +136,13 @@ class ModelTraining:
                 best_lgbm_modle = self.train_lightgbm(x_train, y_train)
                 metrices = self.evaluate_model(best_lgbm_modle, x_test, y_test)
                 self.save_model(best_lgbm_modle)
+
+                logger.info("Logging the model into MLFLOW")
+                mlflow.log_artifact(self.model_output_path)
+
+                logger.info("logging params and metrics into MLFLOW")
+                mlflow.log_params(best_lgbm_modle.get_params())
+                mlflow.log_metrics(metrices)
 
                 logger.info("Model training successfully complted")
         except Exception as e:

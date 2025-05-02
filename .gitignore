@@ -3,3 +3,4 @@ artifacts
 logs
 notebook/train.csv
 notebook/random_forest.pkl
+mlruns

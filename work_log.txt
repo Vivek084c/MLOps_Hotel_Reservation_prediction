@@ -26,3 +26,6 @@ preprocess data, drop columns, handled skewness
 2/5/25 - 12 pm
 Done with developoing pipeline for model training and evaluation along with hyper parameter tunning
 now we will integrate the mlflow for expernement tracking
+
+2/5/25 - 12 pm
+mlflow integration is working fine and the logging and tracking is also working fine
