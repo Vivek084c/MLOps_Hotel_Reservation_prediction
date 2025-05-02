@@ -9,5 +9,6 @@ Requires-Dist: scikit-learn
 Requires-Dist: pyyaml
 Requires-Dist: imbalanced-learn
 Requires-Dist: lightgbm
+Requires-Dist: mlflow
 Dynamic: author
 Dynamic: requires-dist

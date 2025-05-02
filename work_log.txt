@@ -22,3 +22,7 @@ done various model tranining and ensembles, then did HP tunning on randomforest
 1/5/25 - 7 pm
 done with data preprocessing pipeline, its all working fine, we are able to 
 preprocess data, drop columns, handled skewness
+
+2/5/25 - 12 pm
+Done with developoing pipeline for model training and evaluation along with hyper parameter tunning
+now we will integrate the mlflow for expernement tracking
