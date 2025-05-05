@@ -12,7 +12,7 @@ class CustomException(Exception):
         """
         Fucntion to show the detailed report of the error message
         """
-        _, _, exc_traceback = sys.exc_info()
+        _, _, exc_traceback = traceback.sys.exc_info()
         filename = exc_traceback.tb_frame.f_code.co_filename
         linenumber = exc_traceback.tb_lineno
 
