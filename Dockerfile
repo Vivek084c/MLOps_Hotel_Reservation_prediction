@@ -19,7 +19,7 @@ RUN pip install --no-cache-dir -e .
 RUN python pipeline/training_pipeline.py
 
 # Expose the port that Flask will run on
-EXPOSE 5100
+EXPOSE 8080
 
 # Command to run the app
 CMD ["python", "application.py"]
