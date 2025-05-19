@@ -1,152 +1,156 @@
-# Hotel Reservation Prediction System
+# Hotel Reservation Cancellation Prediction - End-to-End MLOps
 
-## Project Overview
-A machine learning-based web application that predicts hotel reservation cancellations using  ML techniques. The system processes booking details through a web interface to predict cancellation probability, helping hotels optimize their reservation management. I have also maintained a custom pipeline for ML Model and used technologies to track various artifacts as we go down the pipeline
+## 1. Project Overview
 
-## Technologies Stack
-- **Data Processing**: pandas (2.0.0+), numpy (1.24.0+)
-- **Machine Learning**: scikit-learn, LightGBM
-- **Web Framework**: Flask
-- **MLOps**: MLflow
-- **Cloud Storage**: Google Cloud Storage
-- **Other Tools**: PyYAML, imbalanced-learn
+This project implements an end-to-end MLOps system to predict hotel reservation cancellations. Using a LightGBM classifier, the system predicts if a reservation is likely to be canceled based on various booking and customer features. The pipeline handles everything from data ingestion (from Google Cloud Storage), preprocessing, feature engineering, model training with MLflow tracking, to deployment via Jenkins and Google Cloud Run. The tech stack comprises Python, scikit-learn, LightGBM, Flask, MLflow, Google Cloud Platform, Jenkins, and Docker. Test cases may include validation of data ingestion, data transformation, model performance, and REST API prediction endpoints.
 
-## Directory Structure
+## 2. Project Structure
+
 ```
-├── artifacts/          # Generated artifacts during pipeline execution
-│   ├── raw/           # Raw data files
-│   ├── processed/     # Processed datasets
-│   └── models/        # Trained model files
-├── config/            # Configuration files
-│   └── config.yaml    # Main configuration
-├── logs/              # Application and training logs
-├── pipeline/          # ML pipeline components
-│   ├── ingestion.py
-│   ├── preprocessing.py
-│   └── training.py
-├── static/           # CSS and JavaScript files
-├── templates/        # HTML templates
-├── utils/           # Helper functions
-└── src/            # Core application code
-```
-
-## Pipeline Architecture
-
-### 1. Data Ingestion
-- Fetches data from Google Cloud Storage
-- Performs train-test split
-- Generates data ingestion artifacts
-
-```python
-artifacts/
-    ├── raw/
-    │   └── hotel_bookings.csv
-    └── processed/
-        ├── train.csv
-        └── test.csv
+MLOps_Hotel_Reservation_Prediction/
+├── application.py              # Flask application for model serving
+├── artifacts/                  # Stores outputs of pipeline execution
+│   ├── models/                 # Trained models
+│   ├── processed/              # Cleaned and transformed data
+│   └── raw/                    # Raw ingested data from GCS
+├── config/                     # Configuration directory
+│   ├── config.yaml             # Main config for ingestion and processing
+│   ├── model_params.py         # LightGBM and other model parameters
+│   └── path_config.py          # File paths and artifact locations
+├── custom_jenkins/             # Jenkins pipeline config
+├── logs/                       # Runtime and training logs
+├── mlruns/                     # MLflow tracking data and metadata
+├── pipeline/                   # Pipeline orchestration script
+│   └── training_pipeline.py    # Entry-point for executing full ML pipeline
+├── src/                        # Core logic of the pipeline
+│   ├── data_ingestion.py       # Fetches and splits data
+│   ├── data_preprocessing.py   # Cleans, encodes, and balances data
+│   ├── model_training.py       # Trains and evaluates the ML model
+│   ├── custom_exception.py     # Custom error class
+│   └── logger.py               # Logger configuration
+├── static/                     # Web assets (e.g., images)
+├── templates/                  # HTML templates for UI
+├── Dockerfile                  # Docker container instructions
+├── Jenkinsfile                 # CI/CD automation with Jenkins
+├── requirements.txt            # Python dependencies
+└── setup.py                    # Python package metadata
 ```
 
-### 2. Data Preprocessing
-- Feature engineering
-- Label encoding
-- SMOTE for imbalanced data
-- Feature selection using Random Forest
+## 3. Detailed Workflow
 
-### 3. Model Training
-- LightGBM classifier implementation
-- Hyperparameter tuning
-- MLflow experiment tracking
-- Model evaluation and serialization
+### A. Data Ingestion & Storage
 
-## Setup Instructions
+**Technology:** Google Cloud Storage, Pandas
 
-### 1. Environment Setup
+* Connects securely to a GCS bucket using a service account key
+* Downloads the dataset and performs a train-test split based on the config
+* Logs all actions using a custom logger
+
+### B. Data Preprocessing & Feature Engineering
+
+**Technology:** scikit-learn, pandas, imbalanced-learn
+
+* Encodes categorical variables using `LabelEncoder`
+* Handles skewed numerical distributions using log transformations
+* Balances the dataset using SMOTE (Synthetic Minority Over-sampling Technique)
+* Selects relevant features based on feature importance from a RandomForest
+* Outputs processed data into `artifacts/processed/`
+
+### C. Model Training and Evaluation
+
+**Technology:** LightGBM, MLflow, scikit-learn
+
+* Uses LightGBM classifier trained on balanced, clean data
+* Hyperparameter optimization through `RandomizedSearchCV`
+* Evaluation metrics: Accuracy, Precision, Recall, F1-Score
+* Each training run is logged and tracked using MLflow
+
+### D. Deployment (CI/CD)
+
+**Technology:** Flask, Docker, Jenkins, Google Cloud Run
+
+* Flask REST API (`application.py`) serves model predictions via `/predict`
+* Dockerfile containerizes the Flask app
+* Jenkinsfile automates build, test, and deploy stages
+* Deploys container to Google Cloud Run for scalable access
+
+## 4. Local Environment Setup
+
+### Step 1: Google Cloud Configuration
+
 ```bash
-# Create virtual environment
+# Download and install GCP SDK
+# Create and download a service account key from GCP Console
+export GOOGLE_APPLICATION_CREDENTIALS="path/to/your-service-account-key.json"
+```
+
+### Step 2: Create Python Virtual Environment
+
+```bash
 python -m venv venv
-
-# Activate virtual environment
-source venv/bin/activate  # For Mac/Linux
+source venv/bin/activate  # Unix
+# or
+.\venv\Scripts\activate  # Windows
 ```
 
-### 2. Install Dependencies
+### Step 3: Install Requirements
+
 ```bash
-pip install -r requirements.txt
+pip install -e .
 ```
 
-### 3. Configure Environment Variables
-Create `.env` file:
-```
-FLASK_APP=app.py
-FLASK_ENV=development
-GOOGLE_CLOUD_CREDENTIALS=path/to/credentials.json
-MLFLOW_TRACKING_URI=http://localhost:5000
+### Step 4: Configure Pipeline
+
+Update `config/config.yaml`:
+
+```yaml
+data_ingestion:
+  bucket_name: "your-bucket"
+  bucket_filename: "hotel_bookings.csv"
+  train_ratio: 0.8
+
+data_processing:
+  categorical_columns:
+    - "market_segment_type"
+    - "room_type_reserved"
+    - "type_of_meal_plan"
+  numerical_columns:
+    - "lead_time"
+    - "avg_price_per_room"
+    - "no_of_special_requests"
+  skewness_threshold: 0.5
 ```
 
-### 4. Create Required Directories
+### Step 5: Run MLflow for Tracking
+
 ```bash
-mkdir -p artifacts/raw artifacts/processed artifacts/models logs config
+mlflow server \
+  --backend-store-uri sqlite:///mlflow.db \
+  --default-artifact-root ./mlruns \
+  --host 0.0.0.0 \
+  --port 5000
 ```
 
-### 5. Configure Google Cloud Storage
-- Place your Google Cloud credentials in `config/credentials.json`
-- Update bucket name in `config/config.yaml`
+### Step 6: Run Training Pipeline
 
-### 6. Start MLflow Server
 ```bash
-mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./mlruns --host 0.0.0.0 --port 5000
+python pipeline/training_pipeline.py
 ```
 
-### 7. Run Application
+### Step 7: Run Flask App
+
 ```bash
-flask run
+python application.py
 ```
 
-## Usage
+Access the app at `http://localhost:5000`
 
-### Training Pipeline
-```bash
-python pipeline/main.py --config config/config.yaml
-```
+## 5. Testing & Monitoring
 
-### Making Predictions
-1. Access web interface at `http://localhost:5000`
-2. Input reservation details
-3. Click "Predict" to get cancellation probability
-
-## Model Performance
-- Accuracy: 85%
-- F1 Score: 0.83
-- ROC-AUC: 0.87
-
-## Project Structure Best Practices
-- Modular code architecture
-- Configuration management
-- Experiment tracking
-- Logging implementation
-- Error handling
-- Type hints
-- Documentation
-
-## Contributing
-1. Fork the repository
-2. Create feature branch
-3. Commit changes
-4. Push to branch
-5. Create Pull Request
-
-## Required Files
-```
-.
-├── .gitignore
-├── requirements.txt
-├── config.yaml
-├── .env
-└── credentials.json
-```
+* Use `pytest` to test data functions and API endpoints.
+* Monitor experiments via MLflow UI.
+* Logs are available in `logs/`.
 
 ## License
-MIT License
 
-## Contact
-For questions or feedback, please open an issue in the repository.
+This project is licensed under the MIT License.
